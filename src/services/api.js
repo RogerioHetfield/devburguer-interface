@@ -1,8 +1,6 @@
 import axios from 'axios';
 
-export const api = axios.create({
-  baseURL: 'http://localhost:3001/',
-});
+export const api = axios.create({ baseURL: 'https://devburguer-api.onrender.com' })
 
 api.interceptors.request.use((config) => {
   const userData = localStorage.getItem('saborecor:userData');
