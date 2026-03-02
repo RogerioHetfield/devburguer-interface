@@ -39,14 +39,14 @@ export const RightContainer = styled.div`
     background-position: center;
 
     p {
-        color: #fff;
+        color: #df7e00;
         margin-top: 20px;
         font-size: 18px;
         font-weight: 600;
     }
 
     a {
-        color: #ffffff;
+        color: #df7e00;
         text-decoration: none;
         cursor: pointer;
     }
@@ -67,7 +67,7 @@ export const Title = styled.h2`
     }
 
     #sabor {
-        color: #ffffff;
+        color: #df7e00;
     }
 
 `;
@@ -98,7 +98,7 @@ export const InputContainer = styled.div`
     label {
         font-size: 18px;
         font-weight: 600;
-        color: #fff;
+        color: #df7e00;
     }
 
     p {
@@ -114,5 +114,5 @@ export const InputContainer = styled.div`
 
 export const Link = styled(ReactLink)`
     text-decoration: none;
-    color: #ffffff;
+    color: #df7e00;
 `;
