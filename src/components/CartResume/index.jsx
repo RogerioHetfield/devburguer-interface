@@ -25,32 +25,31 @@ export function CartResume() {
 
     const submitOrder = async () => {
         const products = cartProducts.map((product) => {
-            return { id: product.id, quantity: product.quantity };
+            return { id: product.id, quantity: product.quantity, price: product.price };
         });
 
         try {
-            const { status } = await api.post(
-                '/orders',
-                { products },
-                { validateStatus: () => true }
-            );
+            const { data } = await api.post('/create-payment-intent', { products });
 
-            if (status === 200 || status === 201) {
-                toast.success('Pedido Realizado Com Sucesso!');
+            navigate('/checkout', {
+                state: data
+            });
 
-                setTimeout(() => {
-                    navigate('/');
-                    clearCart(); // Limpa o carrinho exatamente quando for mudar de página
-                }, 2000);
-
-            } else if (status === 409) {
-                toast.error('Erro ao tentar realizar o pedido.');
-            } else {
-                throw new Error();
+        } catch (err) {
+            toast.error("Falha no Sistema. Tente novamente.", {
+                position: 'top-right',
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
             }
-        } catch (error) {
-            toast.error("Falha no Sistema. Tente novamente.");
+            );
         }
+
+        
     };
 
     return (
