@@ -37,13 +37,14 @@ export default function CheckoutForm() {
 
         const { error, paymentIntent } = await stripe.confirmPayment({
             elements,
-            confirmParams: {
-                return_url: window.location.origin + "/confirmacao", // Ajuste sua rota aqui
-            },
+            redirect: "if_required",
         });
 
         if (error) {
             setMessage(error.message);
+            toast.error(error.message);
+
+
         } else if (paymentIntent && paymentIntent.status === "succeeded") {
             try {
 
@@ -61,9 +62,9 @@ export default function CheckoutForm() {
                     toast.success('Pedido Realizado Com Sucesso!');
 
                     setTimeout(() => {
-                        navigate('/');
+                        navigate(`/complete?payment_intent_client_secret=${paymentIntent.client_secret}`);
                         clearCart(); // Limpa o carrinho exatamente quando for mudar de página
-                    }, 2000);
+                    }, 3000);
 
                 } else if (status === 409) {
                     toast.error('Erro ao tentar realizar o pedido.');
@@ -73,6 +74,8 @@ export default function CheckoutForm() {
             } catch (error) {
                 toast.error("Falha no Sistema. Tente novamente.");
             }
+        } else {
+            toast.error("Falha no Sistema. Tente novamente.");
         }
 
         setIsLoading(false);
