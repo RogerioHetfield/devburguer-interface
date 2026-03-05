@@ -69,6 +69,10 @@
   cursor: default;
 }
 
+.status-title {
+  text-align: center;
+}
+
 /* spinner/processing state, errors */
 .spinner,
 .spinner:before,
@@ -159,6 +163,7 @@
   font-family: Arial, sans-serif;
   display: block;
 }
+
 .dpm-integration-checker:hover {
   filter: contrast(120%);
 }
@@ -173,13 +178,18 @@ table {
   font-size: 14px;
   border-collapse: collapse;
 }
+
 table tbody tr:first-child td {
-  border-top: 1px solid #E6E6E6; /* Top border */
+  border-top: 1px solid #E6E6E6;
+  /* Top border */
   padding-top: 10px;
 }
+
 table tbody tr:last-child td {
-  border-bottom: 1px solid #E6E6E6; /* Bottom border */
+  border-bottom: 1px solid #E6E6E6;
+  /* Bottom border */
 }
+
 td {
   padding-bottom: 10px;
 }
@@ -208,6 +218,7 @@ td {
   transition: all 0.2s ease;
   box-shadow: 0px 4px 5.5px 0px rgba(0, 0, 0, 0.07);
   width: 100%;
+  text-decoration: none;
 }
 
 @keyframes loading {
@@ -215,19 +226,23 @@ td {
     -webkit-transform: rotate(0deg);
     transform: rotate(0deg);
   }
+
   100% {
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg);
   }
 }
+
 @keyframes fadeInAnimation {
   to {
-      opacity: 1;
+    opacity: 1;
   }
 }
 
 @media only screen and (max-width: 600px) {
-  form, #payment-status {
+
+  form,
+  #payment-status {
     width: 80vw;
     min-width: initial;
   }

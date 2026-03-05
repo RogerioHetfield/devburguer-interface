@@ -63,9 +63,10 @@ export default function CheckoutForm() {
 
                     setTimeout(() => {
                         navigate(`/complete?payment_intent_client_secret=${paymentIntent.client_secret}`);
-                        clearCart(); // Limpa o carrinho exatamente quando for mudar de página
+                         // Limpa o carrinho exatamente quando for mudar de página
                     }, 3000);
 
+                    clearCart();
                 } else if (status === 409) {
                     toast.error('Erro ao tentar realizar o pedido.');
                 } else {
@@ -75,7 +76,7 @@ export default function CheckoutForm() {
                 toast.error("Falha no Sistema. Tente novamente.");
             }
         } else {
-            toast.error("Falha no Sistema. Tente novamente.");
+            navigate(`/complete?payment_intent_client_secret=${paymentIntent.client_secret}`);
         }
 
         setIsLoading(false);
