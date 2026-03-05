@@ -1,0 +1,17 @@
+export const standardTheme = {
+    orange: '#df4700',
+    secondOrange: '#bc521d',
+    mainBlack: '#1f1f1f',
+    black: '#363636',
+    secondBlack: '#484848',
+    darkGray: '#625e5e',
+    lightGray: '#cdcdcd',
+    red: '#df0000',
+    darkRed: '#cf3057',
+    white: '#fff',
+    secondWhite: '#f0f0f0',
+    darkWhite: '#f4f4f4',
+    gren: '#2b744c',
+    roadRageFont: '"Road Rage", sans-serif',
+    poppinsFont: '"Poppins", sans-serif',
+};
