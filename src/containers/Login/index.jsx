@@ -38,17 +38,24 @@ export function Login() {
     console.log(errors)
 
     const onSubmit = async (data) => {
-        const {data: userData } = await toast.promise(
+        const { data: userData } = await toast.promise(
             api.post('/sessions', {
                 email: data.email,
                 password: data.password
+
+                
             }),
+            
             {
                 pending: 'Verificando suas credenciais',
                 success: {
                     render() {
                         setTimeout(() => {
-                            navigate('/');
+                            if (userData?.admin) {
+                                navigate('/admin/pedidos');
+                            } else {
+                                navigate('/');
+                            }
                         }, 2000);
 
                         return 'Login realizado com sucesso!';

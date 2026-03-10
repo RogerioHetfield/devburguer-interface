@@ -13,6 +13,14 @@ export const globalStyles = createGlobalStyle`
         font-style: normal;
     }
 
+    html, body, #root {
+        height: 100%;
+    }
+
+    body {
+        overflow-x: hidden;
+    }
+
     button, a {
         cursor: pointer;
     }
