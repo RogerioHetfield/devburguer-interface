@@ -14,15 +14,30 @@ import { useState } from 'react';
 import { formatDate } from '../../../utils/formatDate';
 import { ProductImage, SelectStatus } from './styles';
 import { orderStatusOptions } from './orderStatus';
-import {api} from '../../../services/api';
+import { api } from '../../../services/api';
 
-export function Row(props) {
-  const { row } = props;
+export function Row({ row, orders, setOrders }) {
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
 
 
   async function newStatusOrder(id, status) {
-    await api.put(`/orders/${id}`, { status });
+
+    try {
+      setLoading(true);
+      await api.put(`/orders/${id}`, { status });
+
+      const newOrders = orders.map(order => order._id === id ? { ...order, status } : order);
+
+      setOrders(newOrders);
+
+    } catch (error) {
+      console.error('Erro ao atualizar o status do pedido:', error);
+    }
+    finally {
+      setLoading(false);
+    }
+
   }
 
   return (
@@ -46,6 +61,8 @@ export function Row(props) {
           <SelectStatus
             options={orderStatusOptions.filter(status => status.id !== 0)} placeholder="Selecione o status" defaultValue={orderStatusOptions.find(status => status.value === row.status || null)}
             onChange={status => newStatusOrder(row.orderId, status.value)}
+            isLoading={loading}
+            menuPortalTarget={document.body}
           />
         </TableCell>
       </TableRow>
@@ -89,6 +106,8 @@ export function Row(props) {
 }
 
 Row.propTypes = {
+  orders: PropTypes.array.isRequired,
+  setOrders: PropTypes.func.isRequired,
   row: PropTypes.shape({
     orderId: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
