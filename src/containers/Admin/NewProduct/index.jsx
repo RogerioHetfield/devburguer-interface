@@ -1,59 +1,37 @@
-import { yupResolver } from '@hookform/resolvers/yup'
-import { Image, ImageIcon } from '@phosphor-icons/react'
-import { useForm } from 'react-hook-form'
-import * as yup from 'yup'
-import {
-    Input,
-    Container,
-    Form,
-    InputGroup,
-    LabelUpload,
-    Lable,
-    Select,
-    submitButton as SubmitButton
-} from './styles'
-
-const schema = yup.object().shape({
-    name: yup.string().required('O nome do produto é obrigatório'),
-    price: yup.number().required('O preço do produto é obrigatório').positive('O preço deve ser um número positivo'),
-    category: yup.string().required('A categoria do produto é obrigatória'),
-    description: yup.string().required('A descrição do produto é obrigatória'),
-    image: yup.string().required('A imagem do produto é obrigatória')
-})
-
+import React, { useEffect, useState } from 'react'; // 1. Importe os Hooks
+import { api } from '../../services/api'; // 2. Importe sua API configurada
+// ... seus outros imports
 
 export function NewProduct() {
-    const { register,
-        handleSubmit,
-        formState: { errors }
-    } = useForm({
+    const [categories, setCategories] = useState([]); // 3. Estado para guardar as categorias
+
+    const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(schema)
     });
+
+    // 4. Função para buscar as categorias no Render
+    useEffect(() => {
+        async function loadCategories() {
+            const { data } = await api.get('/categories');
+            setCategories(data);
+        }
+        loadCategories();
+    }, []);
 
     return (
         <Container>
             <Form>
-                <InputGroup>
-                    <Lable>Nome</Lable>
-                    <Input />
-                </InputGroup>
-
-                <InputGroup>
-                    <Lable>Preço</Lable>
-                    <Input />
-                </InputGroup>
-
-                <InputGroup>
-                    <LabelUpload>
-                        <ImageIcon />
-                        <input type="file" />
-                    </LabelUpload>
-                </InputGroup>
-
+                {/* ... outros campos ... */}
 
                 <InputGroup>
                     <Lable>Categoria</Lable>
-                    <Select />
+                    {/* 5. Preencha o Select com as categorias do banco */}
+                    <Select 
+                        options={categories} 
+                        getOptionLabel={(cat) => cat.name}
+                        getOptionValue={(cat) => cat.id}
+                        placeholder="Escolha a categoria"
+                    />
                 </InputGroup>
 
                 <SubmitButton>Adicionar Produto</SubmitButton>
