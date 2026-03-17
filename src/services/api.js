@@ -9,7 +9,7 @@ api.interceptors.request.use((config) => {
   const userData = localStorage.getItem('saborecor:userData');
   const token = userData && JSON.parse(userData).token;
 
-  config.headers.authorization = `Bearer ${token}`;
+  config.headers.Authorization = `Bearer ${token}`;
 
   return config;
 });
